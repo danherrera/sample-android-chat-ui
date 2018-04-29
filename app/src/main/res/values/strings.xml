@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidChatUI</string>
+    <string name="content_description_button_send">Send Message</string>
+    <string name="hint_send_message">Send a message</string>
+</resources>
