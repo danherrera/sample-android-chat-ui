@@ -25,11 +25,7 @@ class ChatMessageAdapter : RecyclerView.Adapter<ChatMessageAdapter.ChatViewHolde
     override fun getItemCount(): Int = chatMessages.size
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        val viewModel = chatMessages[position]
-        viewModel.run {
-            Log.d(this::class.java.simpleName, "\ninitial: $initial\nname: $name\nmessage: $message")
-        }
-        holder.binding.setVariable(BR.viewModel, viewModel)
+        holder.binding.setVariable(BR.viewModel, chatMessages[position])
     }
 
     class ChatViewHolder(val binding: LayoutChatMessageBinding) : RecyclerView.ViewHolder(binding.root)
