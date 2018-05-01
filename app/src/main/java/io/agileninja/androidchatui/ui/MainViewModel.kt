@@ -1,10 +1,11 @@
 package io.agileninja.androidchatui.ui
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import io.agileninja.androidchatui.R
 import io.agileninja.androidchatui.model.ChatMessage
 
-class MainViewModel : ViewModel() {
+class MainViewModel : BaseViewModel(), LayoutViewModel {
+    override val layout: Int = R.layout.fragment_chat
 
     private val typedText = MutableLiveData<String>()
 

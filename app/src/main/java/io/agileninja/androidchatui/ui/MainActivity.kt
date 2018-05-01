@@ -1,69 +1,26 @@
 package io.agileninja.androidchatui.ui
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.widget.EditText
-import android.widget.ImageButton
-import com.jakewharton.rxbinding2.view.RxView
-import com.jakewharton.rxbinding2.widget.RxTextView
+import android.widget.FrameLayout
 import io.agileninja.androidchatui.R
-import io.agileninja.androidchatui.getViewModel
-import io.reactivex.subjects.PublishSubject
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var messageEditText: EditText
-    private lateinit var sendMessageButton: ImageButton
-    private lateinit var chatRecyclerView: RecyclerView
-
-    private val stopStreams = PublishSubject.create<Unit>()
+    private lateinit var fragmentContainer: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fragmentContainer = findViewById(R.id.fragment_container)
 
-        messageEditText = findViewById(R.id.messageEditText)
-        sendMessageButton = findViewById(R.id.sendButton)
-        chatRecyclerView = findViewById(R.id.chatRecyclerView)
-
-        chatRecyclerView.layoutManager = LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false)
-        val chatAdapter = LayoutViewModelAdapter()
-        chatRecyclerView.adapter = chatAdapter
-
-        viewModel = getViewModel(MainViewModel::class.java)
-
-        viewModel.clearText.observe(this,
-                Observer { messageEditText.setText("") })
-
-        viewModel.messageHistory.observe(this,
-                Observer {
-                    chatAdapter.viewModels = it?.toList()
-                            ?.also { chatRecyclerView.smoothScrollToPosition(it.size) }
-                            ?: emptyList()
-                })
-
-        viewModel.sendButtonEnabled.observe(this,
-                Observer { sendMessageButton.isEnabled = it ?: false })
-
-        RxTextView
-                .textChanges(messageEditText)
-                .takeUntil(stopStreams)
-                .subscribe { viewModel.typeText(it.toString()) }
-
-        RxView
-                .clicks(sendMessageButton)
-                .takeUntil(stopStreams)
-                .subscribe { viewModel.clickSendButton() }
+        savedInstanceState ?: run {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, ChatFragment.newInstance(), "chat")
+                    .addToBackStack("chat")
+                    .commit()
+        }
     }
 
-
-    override fun onDestroy() {
-        stopStreams.onNext(Unit)
-        super.onDestroy()
-    }
 }
