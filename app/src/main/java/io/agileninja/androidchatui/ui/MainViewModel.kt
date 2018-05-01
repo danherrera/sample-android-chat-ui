@@ -10,7 +10,7 @@ class MainViewModel : ViewModel() {
 
     val name = "Danilo"
     val clearText = MutableLiveData<Unit>()
-    val messageHistory = MutableLiveData<MutableList<ChatMessage>>()
+    val messageHistory = MutableLiveData<List<ChatMessageViewModel>>()
     val sendButtonEnabled = MutableLiveData<Boolean>()
 
     private fun clearText() {
@@ -20,9 +20,7 @@ class MainViewModel : ViewModel() {
     fun clickSendButton() {
         typedText.value?.also { text ->
             messageHistory.postValue(
-                    messageHistory.value?.apply {
-                        add(0, ChatMessage(name, text))
-                    } ?: mutableListOf(ChatMessage(name, text))
+                    messageHistory.value.orEmpty() + listOf(ChatMessageViewModel(ChatMessage(name, text)))
             )
         }
         clearText()

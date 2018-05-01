@@ -30,8 +30,9 @@ class MainActivity : AppCompatActivity() {
         sendMessageButton = findViewById(R.id.sendButton)
         chatRecyclerView = findViewById(R.id.chatRecyclerView)
 
-        chatRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
-        val chatAdapter = ChatMessageAdapter()
+        chatRecyclerView.layoutManager = LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false)
+        val chatAdapter = LayoutViewModelAdapter()
         chatRecyclerView.adapter = chatAdapter
 
         viewModel = getViewModel(MainViewModel::class.java)
@@ -41,8 +42,9 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.messageHistory.observe(this,
                 Observer {
-                    chatAdapter.chatMessages = it?.map { ChatMessageViewModel(it) }
-                            .let { it?.toMutableList() ?: mutableListOf() }
+                    chatAdapter.viewModels = it?.toList()
+                            ?.also { chatRecyclerView.smoothScrollToPosition(it.size) }
+                            ?: emptyList()
                 })
 
         viewModel.sendButtonEnabled.observe(this,
