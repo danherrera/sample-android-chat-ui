@@ -1,13 +1,13 @@
-package io.agileninja.androidchatui.ui
+package io.agileninja.mvvm.adapters
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.android.databinding.library.baseAdapters.BR
+import io.agileninja.mvvm.core.LayoutViewModel
 import kotlin.properties.Delegates
 
 class LayoutViewModelAdapter : RecyclerView.Adapter<LayoutViewModelAdapter.LayoutViewHolder>() {

@@ -1,4 +1,4 @@
-package io.agileninja.androidchatui.ui
+package io.agileninja.mvvm.core
 
 import android.arch.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package io.agileninja.androidchatui.ui
+package io.agileninja.mvvm.core
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.android.databinding.library.baseAdapters.BR
-import io.agileninja.androidchatui.getViewModel
 
 abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 

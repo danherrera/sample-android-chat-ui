@@ -10,6 +10,8 @@ import android.widget.ImageButton
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.agileninja.androidchatui.R
+import io.agileninja.mvvm.adapters.LayoutViewModelAdapter
+import io.agileninja.mvvm.core.BaseFragment
 import io.reactivex.subjects.PublishSubject
 
 
